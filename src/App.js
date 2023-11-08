@@ -7,7 +7,11 @@ import Categories from "./Components/Categories/Categories";
 import Login from "./Components/Login/Login";
 import Register from "./Components/Register/Register";
 import Notfound from "./Components/Notfound/Notfound";
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import {
+  RouterProvider,
+  createBrowserRouter,
+  createHashRouter,
+} from "react-router-dom";
 import Brands from "./Components/Brands/Brands";
 import { UserToken } from "./Context/UserToken";
 import ProtectedRoute from "./Components/ProtectedRoute";
@@ -25,7 +29,7 @@ export default function App() {
     }
   });
 
-  const routes = createBrowserRouter([
+  const routes = createHashRouter([
     {
       path: "/",
       element: <Layout></Layout>,
