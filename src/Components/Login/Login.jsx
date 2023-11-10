@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { useNavigate } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { UserToken } from "../../Context/UserToken";
 import { Helmet } from "react-helmet";
@@ -20,9 +20,11 @@ export default function Login() {
       .catch((err) => {
         setError(err.response.data.message);
         setLoading(false);
+        console.log(data);
       });
     if (data.message === "success") {
       setError("");
+      console.log(data);
       setLoading(false);
       localStorage.setItem("userToken", data.token);
       setLogin(data.token);
@@ -111,17 +113,25 @@ export default function Login() {
           )}
 
           {loading ? (
-            <button className="btn ms-auto d-block form-btn float-end text-white">
-              <i className="fa-solid fa-spin fa-spinner"></i>
-            </button>
+            <div className="d-flex align-items-center">
+              <p className="h5 forgot">Forgot Password</p>
+              <button className="btn ms-auto d-block form-btn float-end text-white">
+                <i className="fa-solid fa-spin fa-spinner"></i>
+              </button>
+            </div>
           ) : (
-            <button
-              type="submit"
-              className="btn ms-auto d-block form-btn float-end text-white"
-              disabled={!(formik.isValid && formik.dirty)}
-            >
-              Login
-            </button>
+            <div className="d-flex align-items-center">
+              <Link to={"/forgot-password"}>
+                <p className="h5 forgot">Forgot Password</p>
+              </Link>
+              <button
+                type="submit"
+                className="btn ms-auto d-block form-btn float-end text-white"
+                disabled={!(formik.isValid && formik.dirty)}
+              >
+                Login
+              </button>
+            </div>
           )}
         </form>
       </div>

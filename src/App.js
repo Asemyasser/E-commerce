@@ -19,6 +19,8 @@ import ProductDetails from "./Components/ProductDetails";
 import Orders from "./Components/Orders/Orders";
 import toast, { Toaster } from "react-hot-toast";
 import Cart from "./Components/Cart/Cart";
+import ForgotPass from "./Components/Login/ForgotPass";
+import ResetPass from "./Components/Login/ResetPass";
 
 export default function App() {
   const { setLogin } = useContext(UserToken);
@@ -50,7 +52,21 @@ export default function App() {
           path: "productdetails/:id",
           element: <ProductDetails></ProductDetails>,
         },
-        { path: "login", element: <Login></Login> },
+        {
+          path: "login",
+          element: <Login></Login>,
+        },
+
+        {
+          path: "forgot-password",
+          element: <ForgotPass></ForgotPass>,
+        },
+
+        {
+          path: "reset-password",
+          element: <ResetPass></ResetPass>,
+        },
+
         { path: "brands", element: <Brands></Brands> },
         { path: "register", element: <Register></Register> },
         { path: "*", element: <Notfound></Notfound> },

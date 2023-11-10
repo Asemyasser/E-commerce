@@ -39,7 +39,7 @@ export default function FeaturedProducts() {
   // useEffect(() => {
   //   getProducts();
   // }, []);
-  let { isLoading, data } = useApi("products", "products");
+  let { isLoading, data } = useApi("products", "products", "get");
 
   if (isLoading) return <Loading />;
   return (

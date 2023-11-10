@@ -7,7 +7,7 @@ import Modal from "react-bootstrap/Modal";
 import Loading from "../Loading/Loading";
 
 export default function Brands() {
-  let { isLoading, data } = useApi("brands", "brands");
+  let { isLoading, data } = useApi("brands", "brands", "get");
   const [show, setShow] = useState(false);
 
   const [brand, setBrand] = useState([]);

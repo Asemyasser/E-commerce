@@ -9,7 +9,6 @@ export default function CartModal() {
   let { checkout, cartId } = useContext(CartContext);
 
   const [show, setShow] = useState(false);
-
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
