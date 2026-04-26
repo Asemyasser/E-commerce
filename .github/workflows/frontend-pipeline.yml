@@ -32,4 +32,4 @@ jobs:
 
       - name: Custom warning command
         if: failure()
-        run: echo "::Warning:: Tests failed on Node ${{ matrix.node-version }}. Please check the logs for details."
+        run: echo "::warning::Tests failed on Noede ${{ matrix.node-version }}. Please check the logs for details."
