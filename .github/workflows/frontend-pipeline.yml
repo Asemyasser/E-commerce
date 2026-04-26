@@ -58,3 +58,20 @@ jobs:
           echo "Building Docker image with tag: ${{ inputs.image_tag }}..."
           echo "Pushing Docker image to registry..."
           echo "Docker image pushed successfully with tag: ${{ inputs.image_tag || 'latest' }}!"
+
+  k8s-deploy:
+    name: Deploy to Kubernetes
+    needs: docker-build-push
+    if: github.ref == 'refs/heads/main' && success()
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Mask Sensitive Database String
+        run: echo "::add-mask::SuperSecretDBPassword123!"
+
+      - name: Mock Kubernetes Deployment
+        run: |
+          echo "Authenticating with Kubernetes cluster..."
+          echo "Injecting password: SuperSecretDBPassword123!"
+          echo "Applying deployment.yaml for image tag ${{ inputs.image_tag || 'latest' }}..."
+          echo "Deployment successful! Your app is Live."
