@@ -1,0 +1,25 @@
+name: Scheduled Database Backup
+on:
+  schedule:
+    - cron: '0 2 * * *' # Every day at 2 AM
+    workflow_dispatch: # Allow manual trigger
+  
+jobs:
+  db-backup:
+    name: Daily MySQL Dump
+    runs-on: ubuntu-latest
+
+    container:
+      image: almalinux:9
+
+    steps:
+      - name: Install MySQL Client
+        run: dnf install -y mysql
+
+      - name: Execute Mock Backup
+        run: |
+          echo "Conntecting to production MySQL database..."
+          echo "Executing mysqldump command..."
+          echo "Compressing to backup_&(data +%F).tar.gz..."
+          echo "Uploading to secure cloud storage..."
+          echo "Backup complete!"
