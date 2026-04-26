@@ -7,16 +7,23 @@ on:
     branches:
       - main
   workflow_dispatch:
+    inputs:
+      image_tag:
+        description: "Tag for the Docker image (e.g., v1.0.0)"
+        required: true
+        default: "latest"
 
 jobs:
   frontend-test:
     name: Run React Tests
     runs-on: ubuntu-latest
+
     strategy:
       matrix:
         node-version: [18.x, 20.x]
+
     steps:
-      - name: Checkout code
+      - name: Checkout Code
         uses: actions/checkout@v4
 
       - name: Set up Node.js ${{ matrix.node-version }}
@@ -32,4 +39,22 @@ jobs:
 
       - name: Custom warning command
         if: failure()
-        run: echo "::warning::Tests failed on Noede ${{ matrix.node-version }}. Please check the logs for details."
+        run: echo "::warning::Tests failed on Node ${{ matrix.node-version }}. Please check the logs for details."
+
+  docker-build-push:
+    name: Build & Push Container
+    needs: frontend-test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Mock Docker Login & Push
+        env:
+          DOCKER_USER: ${{ secrets.DOCKER_USERNAME || 'asem_mock_user'}}
+        run: |
+          echo "Logging in to Docker Hub as $DOCKER_USER..."
+          echo "Building Docker image with tag: ${{ inputs.image_tag }}..."
+          echo "Pushing Docker image to registry..."
+          echo "Docker image pushed successfully with tag: ${{ inputs.image_tag || 'latest' }}!"
