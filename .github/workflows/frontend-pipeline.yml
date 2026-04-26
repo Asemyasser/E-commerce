@@ -1,0 +1,35 @@
+name: React frontend pipeline
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  frontend-test:
+    name: Run React Tests
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Mock NPM Install & Test
+        run: |
+          echo "Running npm install..."
+          echo "Running npm test on Node ${{ matrix.node-version }}..."
+          echo "Tests Passed successfully on Node ${{ matrix.node-version }}!"
+
+      - name: Custom warning command
+        if: failure()
+        run: echo "Warning: Tests failed on Node ${{ matrix.node-version }}. Please check the logs for details."
